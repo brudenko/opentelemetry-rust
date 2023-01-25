@@ -1,25 +1,46 @@
-* The application send data directly to a Collector (port 4318)
-* Run the application locally, to run as a docker container you have to change the relative paths from the `Cargo.toml`
-* The Collector then sends the data to the appropriate backend, in this case JAEGER
+# NewRelic OpenTelemetry Example
 
-This demo uses `docker-compose` and by default runs against the `otel/opentelemetry-collector-dev:latest` image,
-and uses `http` as the transport.
+## Usage
 
-```shell
-docker-compose up
-or
-docker-compose up -d
+1. Create the OpenTelemetry Collector configuration file and insert the NewRelic licese key there
+
+```bash
+cp otel-collector-config.example.yaml otel-collector-config.yaml
 ```
 
-In another terminal run the application `cargo run`
+2. Start the OpenTelemetry Collector
 
-Use the browser to see the trace:
-- Jaeger at http://0.0.0.0:16686
-
-Tear it down:
-
-```shell
-docker-compose down
+```bash
+docker compose up
 ```
 
+3. Create the python virtual environment
 
+```bash
+virtualenv --python=3 venv
+source venv/bin/activate
+```
+
+4. Generate the OpenTelemetry logs
+
+```bash
+python logs.py
+```
+
+5. Generate the OpenTelemetry traces
+
+```bash
+cargo run
+```
+
+6. Check the NewRelic Logs UI
+
+Go to [one.newrelic.com](one.newrelic.com) > __Logs__ and run the following query:
+
+```
+newrelic.source:"api.logs.otlp"
+```
+
+7. Check the NewRelic Traces UI
+
+Go to [one.newrelic.com](one.newrelic.com) > __Traces__ and find your trace.

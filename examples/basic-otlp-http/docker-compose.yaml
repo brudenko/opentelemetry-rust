@@ -2,7 +2,7 @@ version: "2"
 services:
 
   # Jaeger
-  jaeger-all-in-one:
+  jaeger:
     image: jaegertracing/all-in-one:latest
     ports:
       - "16686:16686"
@@ -11,7 +11,7 @@ services:
 
   # Collector
   otel-collector:
-    image: otel/opentelemetry-collector:latest
+    image: otel/opentelemetry-collector:0.69.0
     command: ["--config=/etc/otel-collector-config.yaml", "${OTELCOL_ARGS}"]
     volumes:
       - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
@@ -22,7 +22,7 @@ services:
       - "4318:4318"   # OTLP HTTP receiver
       - "55670:55679" # zpages extension
     depends_on:
-      - jaeger-all-in-one
+      - jaeger
 
 
   # metrics-rust:
