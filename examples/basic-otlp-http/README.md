@@ -1,5 +1,13 @@
 # NewRelic OpenTelemetry Example
 
+## Prerequisites
+
+1. Docker, Docker Compose
+
+1. Python 3
+
+1. Rust
+
 ## Usage
 
 1. Create the OpenTelemetry Collector configuration file and insert the NewRelic licese key there

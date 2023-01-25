@@ -28,7 +28,7 @@ async fn main() -> Result<(), Box<dyn Error + Send + Sync + 'static>> {
 
     let tracer = global::tracer("ex.com/basic");
 
-    tracer.in_span("operation", |cx| {
+    tracer.in_span("GetProducts", |cx| {
         let span = cx.span();
         span.add_event(
             "Nice operation!".to_string(),
@@ -36,7 +36,7 @@ async fn main() -> Result<(), Box<dyn Error + Send + Sync + 'static>> {
         );
         span.set_attribute(ANOTHER_KEY.string("yes"));
 
-        tracer.in_span("Sub operation...", |cx| {
+        tracer.in_span("GetProductImages", |cx| {
             let span = cx.span();
             span.set_attribute(LEMONS_KEY.string("five"));
 
